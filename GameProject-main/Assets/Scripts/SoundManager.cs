@@ -44,6 +44,7 @@ public class SoundManager : MonoBehaviour
 
     private void CuttingCounter_OnAnyCut(object sender, System.EventArgs e)
     {
+         
        CuttingCounter cuttingCounter = sender as CuttingCounter;
         PlaySound(audioClipRefsSO.chop, cuttingCounter.transform.position);
     }
