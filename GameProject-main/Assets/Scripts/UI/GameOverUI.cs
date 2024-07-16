@@ -9,7 +9,7 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnstateChanged += KitchenGameManager_OnstateChanged;
+        KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnstateChanged;
 
         Hide();
     }
