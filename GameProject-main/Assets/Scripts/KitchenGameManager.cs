@@ -17,6 +17,7 @@ public class KitchenGameManager : MonoBehaviour
         WaitingToStart,
         CountDownToStart,
         GamePlaying,
+        LevelComplete,
         GameOver,
     }
 
@@ -27,6 +28,9 @@ public class KitchenGameManager : MonoBehaviour
     private float gamePlayingTimerMax= 60f;
     private bool isGamePaused = false;
 
+
+    [SerializeField] private LevelSystem levelSystem;
+  
     private void Awake()
     {
         state = State.WaitingToStart;
@@ -37,8 +41,9 @@ public class KitchenGameManager : MonoBehaviour
     {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        gamePlayingTimerMax = levelSystem.GetLevelTime(levelSystem.GetCurrentLevelIndex());
+ 
 
-            
     }
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
@@ -72,20 +77,37 @@ public class KitchenGameManager : MonoBehaviour
                     OnStateChanged?.Invoke(this, EventArgs.Empty);
                 }
                 break;
-          case State.GamePlaying:
+            case State.GamePlaying:
                 gamePlayingTimer -= Time.deltaTime;
-                
                 if (gamePlayingTimer < 0f)
                 {
-                    state = State.GameOver;
+                    if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 4)
+                    {
+                        state = State.LevelComplete;
+                    }
+                    else { state = State.GameOver; }
                     OnStateChanged?.Invoke(this, EventArgs.Empty);
                 }
                 break;
-          case State.GameOver:
+            case State.LevelComplete:
+                break;
+            case State.GameOver:
                 break;
         }
-        Debug.Log(state);
+        //Debug.Log(state);
     }
+
+    //private void HandleLevelComplete()
+    //{
+    //    levelSystem.SetNextLevel();
+    //    int currentLevelIndex = levelSystem.GetCurrentLevelIndex();
+    //    gamePlayingTimerMax = levelSystem.GetLevelTime(currentLevelIndex);
+
+    //    // Yeni seviyeyi ba?latmak için durumu güncelleyin ve zamanlay?c?lar? s?f?rlay?n
+    //   // countdownToStartTimer = 3f;
+    //    state = State.CountDownToStart;
+    //    OnStateChanged?.Invoke(this, EventArgs.Empty);
+    //}
     public bool IsGamePlaying()
     {
         return state == State.GamePlaying;
@@ -98,7 +120,10 @@ public class KitchenGameManager : MonoBehaviour
     {
         return countdownToStartTimer;
     }
-
+    public bool IsLevelComplete()
+    {
+        return state == State.LevelComplete;
+    }
     public bool IsGameOver()
     {
         return state == State.GameOver;
