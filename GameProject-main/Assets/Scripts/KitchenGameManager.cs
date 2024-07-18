@@ -74,6 +74,7 @@ public class KitchenGameManager : MonoBehaviour
                 break;
           case State.GamePlaying:
                 gamePlayingTimer -= Time.deltaTime;
+                
                 if (gamePlayingTimer < 0f)
                 {
                     state = State.GameOver;
@@ -125,6 +126,16 @@ public class KitchenGameManager : MonoBehaviour
     public float GetGamePlayingTimer()
     {
         return gamePlayingTimer;
+    }
+
+    public void AddTime(float timeToAdd)
+    {
+        gamePlayingTimer += timeToAdd;
+
+        if (gamePlayingTimer > 60f)
+        {
+            gamePlayingTimerMax = gamePlayingTimer;
+        }
     }
 }
 

@@ -11,10 +11,19 @@ public class GamePlayingClockUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialsecondText;
 
     private void Update()
-    {
-        timerImage.fillAmount = KitchenGameManager.Instance.GetGamePlayingTimerNormalized();
+    {   float gamePlayingTimer = KitchenGameManager.Instance.GetGamePlayingTimer();
 
-        float gamePlayingTimer = KitchenGameManager.Instance.GetGamePlayingTimer();
+        timerImage.fillAmount = KitchenGameManager.Instance.GetGamePlayingTimerNormalized();
+        //if (gamePlayingTimer > 60f)
+        //{
+        //    timerImage.fillAmount = 1f;
+        //}
+        //else
+        //{
+            
+        //}
+
+
         dialsecondText.text = Mathf.Ceil(gamePlayingTimer).ToString();
 
     }

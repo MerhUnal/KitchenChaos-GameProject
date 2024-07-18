@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class DeliveryManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager Instance {  get; private set; }
 
     [SerializeField] private RecipeListSO recipeListSO;
+    [SerializeField] private KitchenObjectSO meat;
 
 
     private List <RecipeSO> waitingRecipeSOList;
@@ -85,6 +87,20 @@ public class DeliveryManager : MonoBehaviour
                     OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
 
+                    //GameTimeAdd
+                    float timeToAdd = 0f;
+                    foreach (KitchenObjectSO ingredient in waitingRecipeSO.kitchenObjectSOList)
+                    {
+                        if (ingredient == meat)
+                        {
+                            timeToAdd += 10f; 
+                        }
+                        else
+                        {
+                            timeToAdd += 5f; 
+                        }
+                    }
+                    KitchenGameManager.Instance.AddTime(timeToAdd);
                     return;
 
                 }  
