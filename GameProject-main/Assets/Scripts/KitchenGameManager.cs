@@ -24,7 +24,7 @@ public class KitchenGameManager : MonoBehaviour
     
     private float countdownToStartTimer = 3f;
     private float gamePlayingTimer ;
-    private float gamePlayingTimerMax= 30f;
+    private float gamePlayingTimerMax= 60f;
     private bool isGamePaused = false;
 
     private void Awake()
@@ -121,6 +121,10 @@ public class KitchenGameManager : MonoBehaviour
             OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         }
         
+    }
+    public float GetGamePlayingTimer()
+    {
+        return gamePlayingTimer;
     }
 }
 
