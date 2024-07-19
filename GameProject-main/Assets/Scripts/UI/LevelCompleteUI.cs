@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NextLevelUI : MonoBehaviour
+public class LevelCompleteUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipesDeliveredText;
     [SerializeField] private Button restartButton;
@@ -13,25 +13,25 @@ public class NextLevelUI : MonoBehaviour
 
     private void Awake()
     {
-
         restartButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.GameScene);
         });
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
         });
+        nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
     }
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnstateChanged;
+        KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
 
         Hide();
     }
 
-    private void KitchenGameManager_OnstateChanged(object sender, System.EventArgs e)
+    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        if (KitchenGameManager.Instance.IsGameOver())
+        if (KitchenGameManager.Instance.IsLevelComplete())
         {
             Show();
             recipesDeliveredText.text = DeliveryManager.Instance.GetsuccessfulRecipesAmount().ToString();
@@ -42,6 +42,10 @@ public class NextLevelUI : MonoBehaviour
         }
     }
 
+    private void OnNextLevelButtonClicked()
+    {
+        KitchenGameManager.Instance.HandleLevelComplete();
+    }
 
     private void Show()
     {

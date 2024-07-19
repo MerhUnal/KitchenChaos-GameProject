@@ -7,30 +7,27 @@ public class LevelSystem : MonoBehaviour
 {
     public LevelDatas levelDatas;
     private string saveFilePath;
-    private int currentLevelIndex;
-
 
     void Start()
     {
         saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
         levelDatas = new LevelDatas();
 
-        LoadGame(); // Daha önce kaydedilmis veriyi yükle
+       // LoadGame(); // Daha önce kaydedilmi? veriyi yükle
 
-        // Eger veri yoksa veya hataliysa yeni seviye verileri olu?tur
+        // E?er veri yoksa veya hatal?ysa yeni seviye verileri olu?tur
         if (levelDatas.levelDatas.Count == 0)
         {
             InitializeLevels();
         }
 
         SaveGame();
-        print(GetLevelTime(currentLevelIndex));
     }
 
     private void InitializeLevels()
     {
-        float[] levelTimes = { 65f, 55f, 50f };
-        int numberOfLevels = 6;
+        float[] levelTimes = { 60f, 55f, 50f };
+        int numberOfLevels = 6; // Örnek olarak 6 seviye
 
         for (int i = 0; i < numberOfLevels; i++)
         {
@@ -40,29 +37,7 @@ public class LevelSystem : MonoBehaviour
             level.recipeSOs = new List<int>() { 0, 3 };
             levelDatas.levelDatas.Add(level);
         }
-
-        currentLevelIndex = 0; // ?lk seviye olarak 0 ba?lat
     }
-
-
-    public float GetLevelTime(int levelIndex)
-    {
-        return levelDatas.levelDatas[levelIndex].levelTime;
-    }
-    public int GetCurrentLevelIndex()
-    {
-        return currentLevelIndex;
-    }
-    public void SetNextLevel()
-    {
-        currentLevelIndex++;
-        if (currentLevelIndex >= levelDatas.levelDatas.Count)
-        {
-            currentLevelIndex = 0; // E?er tüm seviyeler tamamland?ysa tekrar ba?a dön
-        }
-        SaveGame(); // Yeni seviye bilgilerini kaydet
-    }
-
 
     public void SaveGame()
     {
@@ -85,13 +60,33 @@ public class LevelSystem : MonoBehaviour
         }
     }
 
+    public int GetCurrentLevelIndex()
+    {
+        return levelDatas.currentLevelIndex;
+    }
 
+    public void SetNextLevel()
+    {
+        levelDatas.currentLevelIndex++;
+        SaveGame();
+    }
+
+    public float GetLevelTime(int levelIndex)
+    {
+        return levelDatas.levelDatas[levelIndex].levelTime;
+    }
+
+    void Update()
+    {
+        // Update i?lemleri buraya
+    }
 }
 
 [System.Serializable]
 public class LevelDatas
 {
     public List<LevelData> levelDatas = new List<LevelData>();
+    public int currentLevelIndex = 0;
 }
 
 [System.Serializable]

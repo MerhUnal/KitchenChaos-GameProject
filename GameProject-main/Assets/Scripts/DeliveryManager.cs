@@ -121,4 +121,15 @@ public class DeliveryManager : MonoBehaviour
     {
         return successfulRecipeAmount;
     }
+    public void IncrementSuccessfulRecipes()
+    {
+        successfulRecipeAmount++;
+    }
+
+    public void ResetSuccessfulRecipes()
+    {
+        successfulRecipeAmount = 0;
+    }
 }
+
+
