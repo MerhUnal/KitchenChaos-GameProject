@@ -107,16 +107,21 @@ public class KitchenGameManager : MonoBehaviour
 
     public void HandleLevelComplete()
     {
-        levelSystem.SetNextLevel();
         int currentLevelIndex = levelSystem.GetCurrentLevelIndex();
-        gamePlayingTimerMax = levelSystem.GetLevelTime(currentLevelIndex);
+        levelSystem.SetNextLevel();
+        int nextLevelIndex = levelSystem.GetCurrentLevelIndex();
 
-        DeliveryManager.Instance.ResetSuccessfulRecipes();
+        // Yeni seviyeyi ba?latmak için sahneyi güncelleyin
+        string nextSceneName = levelSystem.GetCurrentLevelScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
 
+        // Yeni seviyeye ait süreyi al ve zamanlay?c?y? ayarla
+        gamePlayingTimerMax = levelSystem.GetLevelTime(nextLevelIndex);
         countdownToStartTimer = 3f;
         state = State.CountDownToStart;
         OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
+
 
     public bool IsGamePlaying()
     {

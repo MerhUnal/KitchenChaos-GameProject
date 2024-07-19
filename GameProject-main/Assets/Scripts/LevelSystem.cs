@@ -27,13 +27,15 @@ public class LevelSystem : MonoBehaviour
     private void InitializeLevels()
     {
         float[] levelTimes = { 60f, 55f, 50f };
-        int numberOfLevels = 6; // Örnek olarak 6 seviye
+        string[] sceneNames = { "GameScene", "Stage2", "Stage3" }; // Örnek sahne adlar?
+        int numberOfLevels = 9; // Örnek olarak 9 seviye
 
         for (int i = 0; i < numberOfLevels; i++)
         {
             LevelData level = new LevelData();
             level.levelIndex = i;
             level.levelTime = levelTimes[i % levelTimes.Length];
+            level.sceneName = sceneNames[i / 3]; // Her 3 seviyede bir sahne de?i?ir
             level.recipeSOs = new List<int>() { 0, 3 };
             levelDatas.levelDatas.Add(level);
         }
@@ -76,10 +78,12 @@ public class LevelSystem : MonoBehaviour
         return levelDatas.levelDatas[levelIndex].levelTime;
     }
 
-    void Update()
+    public string GetCurrentLevelScene()
     {
-        // Update i?lemleri buraya
+        int currentLevelIndex = GetCurrentLevelIndex();
+        return levelDatas.levelDatas[currentLevelIndex].sceneName;
     }
+
 }
 
 [System.Serializable]
@@ -94,5 +98,7 @@ public class LevelData
 {
     public int levelIndex;
     public float levelTime;
+    public string sceneName;
     public List<int> recipeSOs;
 }
+
