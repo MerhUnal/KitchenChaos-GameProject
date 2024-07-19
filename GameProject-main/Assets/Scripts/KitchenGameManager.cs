@@ -10,7 +10,7 @@ public class KitchenGameManager : MonoBehaviour
     public event EventHandler OnStateChanged;
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
-
+    public event EventHandler OnGamePlayingTimerChanged;
     private enum State
     {
         WaitingToStart,
@@ -83,6 +83,7 @@ public class KitchenGameManager : MonoBehaviour
                 break;
             case State.GamePlaying:
                 gamePlayingTimer -= Time.deltaTime;
+                OnGamePlayingTimerChanged?.Invoke(this, EventArgs.Empty);
                 if (gamePlayingTimer < 0f)
                 {
                     if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 4)

@@ -19,7 +19,7 @@ public class GameEndCountdownUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnstateChanged;
+        
         KitchenGameManager.Instance.OnGamePlayingTimerChanged += KitchenGameManager_OnGamePlayingTimerChanged;
         Hide();
     }
@@ -28,15 +28,17 @@ public class GameEndCountdownUI : MonoBehaviour
     {
         // Geri sayim süresini aliyoruz.
         int countdownNumber = Mathf.CeilToInt(KitchenGameManager.Instance.GetGamePlayingTimer());
+        print(countdownNumber);
         if (countdownNumber <= 10 && countdownNumber > 0) // Son 10 saniye kontrolu.
         {
+            print(countdownNumber);
             countdownText.text = countdownNumber.ToString();
-
+            Show();
             if (previousCountDownNumber != countdownNumber)
             {
                 previousCountDownNumber = countdownNumber;
                 animator.SetTrigger(NUMBER_POPUP); // Animasyon tetikleniyor.
-                SoundManager.Instance.PlayCountdownSound(); // Ses caliniyor.
+                SoundManager.Instance.PLayCountdownSound(); // Ses caliniyor.
             }
         }
         else
@@ -45,30 +47,9 @@ public class GameEndCountdownUI : MonoBehaviour
         }
     }
 
-    private void KitchenGameManager_OnstateChanged(object sender, System.EventArgs e)
-    {
-        if (KitchenGameManager.Instance.IsCountdownToStartActive())
-        {
-            Show();
-        }
-        else
-        {
-            Hide();
-        }
-    }
+   
 
-    private void Update()
-    {
-        int countdownNumber = Mathf.CeilToInt(KitchenGameManager.Instance.GetCountdownToStartTimer());
-        countdownText.text = countdownNumber.ToString();
-
-        if (previousCountDownNumber != countdownNumber)
-        {
-            previousCountDownNumber = countdownNumber;
-            animator.SetTrigger("NUMBER_Popup");
-            SoundManager.Instance.PLayCountdownSound();
-        }
-    }
+   
     private void Show()
     {
         gameObject.SetActive(true);
