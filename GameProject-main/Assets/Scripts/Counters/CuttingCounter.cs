@@ -19,6 +19,8 @@ public class CuttingCounter : BaseCounter, IHasProgress
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
     
     private int cuttingProgress;
+    
+
     public override void Interact(Player player)
     {
         if (!HasKitchenObject())
@@ -76,28 +78,38 @@ public class CuttingCounter : BaseCounter, IHasProgress
         {
             //There is a Kitchen Object here And can be cut
             cuttingProgress++;
-            OnCut?.Invoke(this,EventArgs.Empty);
-            
-            OnAnyCut?.Invoke(this,EventArgs.Empty);
+            OnCut?.Invoke(this, EventArgs.Empty);
+
+            OnAnyCut?.Invoke(this, EventArgs.Empty);
             CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
 
-            OnProgressChanged.Invoke(this, new IHasProgress.OnprogressChangedEventArgs {
-           
+            OnProgressChanged.Invoke(this, new IHasProgress.OnprogressChangedEventArgs
+            {
+
                 progressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax
             });
 
             if (cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
             {
-            KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO());
-            GetKitchenObject().DestroySelf();
+                KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO());
+                GetKitchenObject().DestroySelf();
 
-            KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this); 
+                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
+
+                StartCoroutine(HideProgressBarAfterDelay(1f));
             }
             
-           
         }
-    }
 
+    }
+    private IEnumerator HideProgressBarAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        OnProgressChanged.Invoke(this, new IHasProgress.OnprogressChangedEventArgs
+        {
+            progressNormalized = 1f
+        });
+    }
     private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO)
     {
         CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(inputKitchenObjectSO);

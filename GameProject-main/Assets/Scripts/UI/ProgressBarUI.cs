@@ -9,6 +9,7 @@ public class ProgressBarUI : MonoBehaviour
     [SerializeField] private GameObject hasProgressGameObject;
 
     private IHasProgress hasProgress;
+    
 
     private void Start()
     {
@@ -24,17 +25,24 @@ public class ProgressBarUI : MonoBehaviour
 
         Hide();
     }
-    private void HasProgress_OnProgressChanged(object sender,IHasProgress.OnprogressChangedEventArgs e)
+    private void HasProgress_OnProgressChanged(object sender, IHasProgress.OnprogressChangedEventArgs e)
     {
         barImage.fillAmount = e.progressNormalized;
 
-        if(e.progressNormalized == 0f || e.progressNormalized == 1f)
+        if (e.progressNormalized == 0f || e.progressNormalized >= 1f)
         {
-            Hide();
-        } else
+            StartCoroutine(HideAfterDelay(1f));
+        }
+        else
         {
             Show();
         }
+    }
+
+    private IEnumerator HideAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Hide();
     }
     private void Show()
     {
