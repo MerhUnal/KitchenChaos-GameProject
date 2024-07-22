@@ -5,28 +5,40 @@ using UnityEngine;
 
 public class LevelSystem : MonoBehaviour
 {
+
+    public static LevelSystem MainLevelSystem;
+
     public LevelDatas levelDatas;
     private string saveFilePath;
 
     void Start()
     {
-        saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
-        levelDatas = new LevelDatas();
 
-       // LoadGame(); // Daha önce kaydedilmi? veriyi yükle
-
-        // E?er veri yoksa veya hatal?ysa yeni seviye verileri olu?tur
-        if (levelDatas.levelDatas.Count == 0)
+        if (MainLevelSystem == null)
         {
-            InitializeLevels();
-        }
+            MainLevelSystem = this;
 
-        SaveGame();
+            Debug.Log("Level system  start");
+            saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
+            levelDatas = new LevelDatas();
+
+            //LoadGame(); // Daha önce kaydedilmi? veriyi yükle
+
+            // E?er veri yoksa veya hatal?ysa yeni seviye verileri olu?tur
+            if (levelDatas.levelDatas.Count == 0)
+            {
+                InitializeLevels();
+            }
+
+            SaveGame();
+
+            DontDestroyOnLoad(this);
+        }
     }
 
     private void InitializeLevels()
     {
-        float[] levelTimes = { 60f, 55f, 50f };
+        float[] levelTimes = { 20f, 25f, 25f };
         string[] sceneNames = { "GameScene", "Stage2", "Stage3" }; // Örnek sahne adlar?
         int numberOfLevels = 9; // Örnek olarak 9 seviye
 
@@ -70,7 +82,7 @@ public class LevelSystem : MonoBehaviour
     public void SetNextLevel()
     {
         levelDatas.currentLevelIndex++;
-        SaveGame();
+        //SaveGame();
     }
 
     public float GetLevelTime(int levelIndex)
