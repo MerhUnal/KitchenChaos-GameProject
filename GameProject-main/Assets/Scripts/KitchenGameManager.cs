@@ -27,8 +27,6 @@ public class KitchenGameManager : MonoBehaviour
     private float gamePlayingTimerMax = 60f;
     private bool isGamePaused = false;
 
-    [SerializeField] private LevelSystem levelSystem;
-
     private void Awake()
     {
         state = State.WaitingToStart;
@@ -40,11 +38,11 @@ public class KitchenGameManager : MonoBehaviour
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
 
-        int currentLevelIndex = levelSystem.GetCurrentLevelIndex();
+        int currentLevelIndex = LevelSystem.MainLevelSystem.GetCurrentLevelIndex();
 
-        if (currentLevelIndex >= 0 && currentLevelIndex < levelSystem.levelDatas.levelDatas.Count)
+        if (currentLevelIndex >= 0 && currentLevelIndex < LevelSystem.MainLevelSystem.levelDatas.levelDatas.Count)
         {
-            gamePlayingTimerMax = levelSystem.GetLevelTime(currentLevelIndex);
+            gamePlayingTimerMax = LevelSystem.MainLevelSystem.GetLevelTime(currentLevelIndex);
         }
         else
         {
@@ -86,7 +84,7 @@ public class KitchenGameManager : MonoBehaviour
                 OnGamePlayingTimerChanged?.Invoke(this, EventArgs.Empty);
                 if (gamePlayingTimer < 0f)
                 {
-                    if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 4)
+                    if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 1)
                     {
                         state = State.LevelComplete;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
@@ -107,19 +105,20 @@ public class KitchenGameManager : MonoBehaviour
 
     public void HandleLevelComplete()
     {
-        int currentLevelIndex = levelSystem.GetCurrentLevelIndex();
-        levelSystem.SetNextLevel();
-        int nextLevelIndex = levelSystem.GetCurrentLevelIndex();
+        int currentLevelIndex = LevelSystem.MainLevelSystem.GetCurrentLevelIndex();
+        LevelSystem.MainLevelSystem.SetNextLevel();
+        int nextLevelIndex = LevelSystem.MainLevelSystem.GetCurrentLevelIndex();
 
         // Yeni seviyeyi ba?latmak için sahneyi güncelleyin
-        string nextSceneName = levelSystem.GetCurrentLevelScene();
+        string nextSceneName = LevelSystem.MainLevelSystem.GetCurrentLevelScene();
         UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
 
         // Yeni seviyeye ait süreyi al ve zamanlay?c?y? ayarla
-        gamePlayingTimerMax = levelSystem.GetLevelTime(nextLevelIndex);
+        
+        gamePlayingTimerMax = LevelSystem.MainLevelSystem.GetLevelTime(nextLevelIndex);
         countdownToStartTimer = 3f;
-        state = State.CountDownToStart;
-        OnStateChanged?.Invoke(this, EventArgs.Empty);
+        //state = State.CountDownToStart;
+        //OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
 
