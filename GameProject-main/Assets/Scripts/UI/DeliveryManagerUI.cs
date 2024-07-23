@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeliveryManagerUI : MonoBehaviour
 {
     [SerializeField] private Transform container;
     [SerializeField] private Transform recipeTemplate;
+    [SerializeField] private TextMeshProUGUI completedOrderText;
 
 
     private void Awake()
@@ -19,11 +21,14 @@ public class DeliveryManagerUI : MonoBehaviour
         DeliveryManager.Instance.OnRecipeCompleted += DeliveryManager_OnRecipeCompleted;
 
         UpdateVisual();
+        UpdateCompletedOrderText();
     }
 
     private void DeliveryManager_OnRecipeCompleted(object sender, System.EventArgs e)
     {
         UpdateVisual();
+        UpdateCompletedOrderText();
+
     }
 
     private void DeliveryManager_OnRecipeSpawned(object sender, System.EventArgs e)
@@ -49,4 +54,8 @@ public class DeliveryManagerUI : MonoBehaviour
 
     }
 
+    private void UpdateCompletedOrderText()  
+    {
+        completedOrderText.text = "Delivered Recipes: " + DeliveryManager.Instance.GetsuccessfulRecipesAmount().ToString();
+    }
 }
