@@ -28,10 +28,10 @@ public class GameEndCountdownUI : MonoBehaviour
     {
         // Geri sayim süresini aliyoruz.
         int countdownNumber = Mathf.CeilToInt(KitchenGameManager.Instance.GetGamePlayingTimer());
-        print(countdownNumber);
+       
         if (countdownNumber <= 10 && countdownNumber > 0) // Son 10 saniye kontrolu.
         {
-            print(countdownNumber);
+           // print(countdownNumber);
             countdownText.text = countdownNumber.ToString();
             Show();
             if (previousCountDownNumber != countdownNumber)

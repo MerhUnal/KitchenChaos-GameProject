@@ -6730,7 +6730,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e51f232f9d16ca489a8f4fafce711da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSystem: {fileID: 1893972262}
 --- !u!4 &674862821
 Transform:
   m_ObjectHideFlags: 0
@@ -17259,7 +17258,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelDatas:
-    levelDatas: []
+    levelDatas:
+    - levelIndex: 2
+      levelTime: 41
+      sceneName: GameScene
+      recipeSOs: 02000000
+      canFireStart: 0
     currentLevelIndex: 0
 --- !u!4 &1893972263
 Transform:

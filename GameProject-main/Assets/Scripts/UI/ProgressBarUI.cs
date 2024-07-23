@@ -31,7 +31,16 @@ public class ProgressBarUI : MonoBehaviour
 
         if (e.progressNormalized == 0f || e.progressNormalized >= 1f)
         {
-            StartCoroutine(HideAfterDelay(1f));
+            if(e.progressNormalized == 0f)
+            {
+                Hide();
+            }
+            else
+            {
+                if (gameObject.activeSelf)
+                    StartCoroutine(HideAfterDelay(1f));
+            }
+            
         }
         else
         {

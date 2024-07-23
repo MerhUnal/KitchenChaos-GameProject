@@ -112,5 +112,6 @@ public class LevelData
     public float levelTime;
     public string sceneName;
     public List<int> recipeSOs;
+    public bool canFireStart;
 }
 

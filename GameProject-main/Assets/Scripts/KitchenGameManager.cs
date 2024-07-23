@@ -11,6 +11,9 @@ public class KitchenGameManager : MonoBehaviour
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
     public event EventHandler OnGamePlayingTimerChanged;
+
+    public System.Action startFireAction; // Yang?n ba?latma action'?
+
     private enum State
     {
         WaitingToStart,
@@ -82,6 +85,9 @@ public class KitchenGameManager : MonoBehaviour
             case State.GamePlaying:
                 gamePlayingTimer -= Time.deltaTime;
                 OnGamePlayingTimerChanged?.Invoke(this, EventArgs.Empty);
+
+                RandomlyStartFire();
+                
                 if (gamePlayingTimer < 0f)
                 {
                     if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 1)
@@ -102,6 +108,9 @@ public class KitchenGameManager : MonoBehaviour
                 break;
         }
     }
+
+  
+
 
     public void HandleLevelComplete()
     {
@@ -179,6 +188,16 @@ public class KitchenGameManager : MonoBehaviour
         if (gamePlayingTimer > 60f)
         {
             gamePlayingTimerMax = gamePlayingTimer;
+        }
+    }
+
+    private void RandomlyStartFire()
+    {
+        float chance = UnityEngine.Random.Range(0f, 1f);
+        if (chance < 0.0001f) // 1% yang?n ba?lama olas?l???
+        {
+            startFireAction?.Invoke();
+            Debug.Log("yangin");
         }
     }
 }
