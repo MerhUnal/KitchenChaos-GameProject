@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22a2df0923831844aae955b4d056486, type: 3}
   m_Name: FireExtinguisher
   m_EditorClassIdentifier: 
-  prefab: {fileID: -8679921383154817045, guid: 313d7dc4283f4a84fbb8b850c02ff634, type: 3}
+  prefab: {fileID: 1815591542261129094, guid: c2c50bb2a43e9524ab694b56f9ef16a6, type: 3}
   sprite: {fileID: 0}
   objectName: FireExtinguisher

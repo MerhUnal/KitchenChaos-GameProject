@@ -30,6 +30,11 @@ public class KitchenObject : MonoBehaviour
 
         transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();
         transform.localPosition = Vector3.zero;
+        if (kitchenObjectSO.objectName == "FireExtinguisher")
+        {
+            transform.localRotation = Quaternion.Euler(0, 90, 90); 
+        }
+
     }
 
     public IKithchenObjectParent GetKitchenObjectParent()
