@@ -18,13 +18,14 @@ public class StoveCounter : BaseCounter, IHasProgress
         Frying,
         Fried,
         Burned,
+    
     }
 
     [SerializeField] private FryingRecipeSO[] fryingRecipeSOArray;
     [SerializeField] private BurningRecipeSO[] burningRecipeSOArray;
-    [SerializeField] private GameObject fireEffect; // Yang?n efekti için
+    [SerializeField] private FireManager fireManager;
 
-    private State state;
+   private State state;
     private float fryingTimer;
     private FryingRecipeSO fryingRecipeSO;
     private float burningTimer;
@@ -34,12 +35,7 @@ public class StoveCounter : BaseCounter, IHasProgress
     private void Start()
     {
         state = State.Idle;
-        KitchenGameManager.Instance.startFireAction += StartFire;
-    }
-
-    private void OnDestroy()
-    {
-        KitchenGameManager.Instance.startFireAction -= StartFire;
+        
     }
 
     private void Update()
@@ -61,7 +57,7 @@ public class StoveCounter : BaseCounter, IHasProgress
                     //Fried
                     fryingTimer = 0f;
 
-                    GetKitchenObject().DestroySelf();
+                    GetKitchenObject()?.DestroySelf();
 
                     KitchenObject.SpawnKitchenObject(fryingRecipeSO.output, this);
 
@@ -88,7 +84,7 @@ public class StoveCounter : BaseCounter, IHasProgress
                     //Burned
                     burningTimer = 0f;
 
-                    GetKitchenObject().DestroySelf();
+                    GetKitchenObject()?.DestroySelf();
 
                     KitchenObject.SpawnKitchenObject(burningRecipeSO.output, this);
 
@@ -104,23 +100,39 @@ public class StoveCounter : BaseCounter, IHasProgress
                         progressNormalized = 0f
                     });
 
-                    StartFire(); // Yanma oldu?unda yang?n? ba?lat
+                    //StartFire(); // Yanma oldu?unda yang?n? ba?lat
                 }
                 break;
             case State.Burned:
                 break;
         }
+
+        if (state != State.Idle)
+        {
+            float chance = UnityEngine.Random.Range(0f, 1f);
+            if (chance < 0.01f) // 1% yang?n ba?lama olas?l???
+            {
+                if (burningRecipeSO == null)
+                {
+                    GetKitchenObject()?.DestroySelf();
+                    KitchenObject.SpawnKitchenObject(fryingRecipeSO.output, this);
+                    burningRecipeSO = GetBurningRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
+                }
+                StartFire();
+            }
+        }
     }
 
     private void StartFire()
     {
-        if (fireEffect != null && !isOnFire)
+        if (!isOnFire)
         {
-            fireEffect.SetActive(true);
+            fireManager.StartRandomFire();
             isOnFire = true;
             BurnMeat(); // Eti yak
         }
     }
+
 
     private void BurnMeat()
     {
@@ -128,15 +140,27 @@ public class StoveCounter : BaseCounter, IHasProgress
         {
             GetKitchenObject().DestroySelf();
             KitchenObject.SpawnKitchenObject(burningRecipeSO.output, this); // Yanm?? eti yerle?tir
+            state = State.Burned;
+            burningTimer = 0f;
+            OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
+            {
+                state = state
+            });
+
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnprogressChangedEventArgs
+            {
+                progressNormalized = 0f
+            });
+
         }
     }
 
-    // InteractAlternate metodunu override ederek yang?n? söndürme
-    public void InteractAlternate()
+    
+    public override void InteractAlternate(Player player)
     {
         if (isOnFire)
         {
-            fireEffect.SetActive(false);
+            fireManager.ExtinguishFire();
             isOnFire = false;
             // Yang?n? söndürme i?lemi burada yap?lacak
         }
@@ -144,6 +168,11 @@ public class StoveCounter : BaseCounter, IHasProgress
 
     public override void Interact(Player player)
     {
+        if (isOnFire)
+        {
+            // Yang?n varken etkile?ime izin verme
+            return;
+        }
         if (!HasKitchenObject())
         {
             //There is no kitchen object here
@@ -169,6 +198,7 @@ public class StoveCounter : BaseCounter, IHasProgress
                     {
                         progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
                     });
+                    
                 }
             }
             else

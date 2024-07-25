@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KitchenGameManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class KitchenGameManager : MonoBehaviour
     public event EventHandler OnGameUnpaused;
     public event EventHandler OnGamePlayingTimerChanged;
 
-    public System.Action startFireAction; // Yang?n ba?latma action'?
+   
 
     private enum State
     {
@@ -86,8 +87,11 @@ public class KitchenGameManager : MonoBehaviour
                 gamePlayingTimer -= Time.deltaTime;
                 OnGamePlayingTimerChanged?.Invoke(this, EventArgs.Empty);
 
-                RandomlyStartFire();
-                
+                if (IsFireScene())
+                {
+                   // RandomlyStartFire();
+                }
+
                 if (gamePlayingTimer < 0f)
                 {
                     if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 1)
@@ -191,13 +195,10 @@ public class KitchenGameManager : MonoBehaviour
         }
     }
 
-    private void RandomlyStartFire()
+
+    private bool IsFireScene()
     {
-        float chance = UnityEngine.Random.Range(0f, 1f);
-        if (chance < 0.0001f) // 1% yang?n ba?lama olas?l???
-        {
-            startFireAction?.Invoke();
-            Debug.Log("yangin");
-        }
+        string sceneName = SceneManager.GetActiveScene().name;
+        return sceneName == "Stage2" || sceneName == "Stage3";
     }
 }

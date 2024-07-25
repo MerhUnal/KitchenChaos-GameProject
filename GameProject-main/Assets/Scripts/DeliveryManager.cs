@@ -93,11 +93,11 @@ public class DeliveryManager : MonoBehaviour
                     {
                         if (ingredient == meat)
                         {
-                            timeToAdd += 10f; 
+                            timeToAdd += 5f; 
                         }
                         else
                         {
-                            timeToAdd += 5f; 
+                            timeToAdd += 3f; 
                         }
                     }
                     KitchenGameManager.Instance.AddTime(timeToAdd);

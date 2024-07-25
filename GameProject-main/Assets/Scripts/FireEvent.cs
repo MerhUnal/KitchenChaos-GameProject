@@ -4,25 +4,35 @@ using UnityEngine;
 
 public class FireManager : MonoBehaviour
 {
-    public GameObject firePrefab;
-    public Transform[] firePoints;
+    [SerializeField] private ParticleSystem fireEffect;
 
+    public System.Action startFireAction; // Yang?n ba?latma action'?
     private void Start()
     {
-        KitchenGameManager.Instance.startFireAction += StartRandomFire;
+       startFireAction += StartRandomFire;
     }
 
     private void OnDestroy()
     {
-        KitchenGameManager.Instance.startFireAction -= StartRandomFire;
+       // KitchenGameManager.Instance.startFireAction -= StartRandomFire;
     }
 
-    private void StartRandomFire()
+    public void StartRandomFire()
     {
-        if (firePoints.Length == 0) return;
+        // Yang?n efektini aktif hale getirme
+        if (fireEffect != null)
+        {
+            fireEffect.gameObject.SetActive(true);
+           
+        }
+    }
 
-        int randomIndex = UnityEngine.Random.Range(0, firePoints.Length);
-        Transform firePoint = firePoints[randomIndex];
-        Instantiate(firePrefab, firePoint.position, firePoint.rotation);
+    public void ExtinguishFire()
+    {
+        // Yang?n efektini devre d??? b?rakma
+        if (fireEffect != null)
+        {
+            fireEffect.gameObject.SetActive(false);
+        }
     }
 }

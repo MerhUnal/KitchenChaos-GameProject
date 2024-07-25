@@ -4981,36 +4981,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1003474309}
     m_Modifications:
-    - target: {fileID: 743680723790649586, guid: 4077fce3ece727747a52feceb5c5a20b,
+    - target: {fileID: 2381364890996120513, guid: 4077fce3ece727747a52feceb5c5a20b,
         type: 3}
-      propertyPath: m_Range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 743680723790649586, guid: 4077fce3ece727747a52feceb5c5a20b,
+      propertyPath: fireManager
+      value: 
+      objectReference: {fileID: 702763236}
+    - target: {fileID: 5165285406969017022, guid: 4077fce3ece727747a52feceb5c5a20b,
         type: 3}
-      propertyPath: m_Intensity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2725328368664487270, guid: 4077fce3ece727747a52feceb5c5a20b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2725328368664487270, guid: 4077fce3ece727747a52feceb5c5a20b,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3866460386280317779, guid: 4077fce3ece727747a52feceb5c5a20b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4586466184508191647, guid: 4077fce3ece727747a52feceb5c5a20b,
-        type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: fireEffect
+      value: 
+      objectReference: {fileID: 1238470775}
     - target: {fileID: 6088628776822124584, guid: 4077fce3ece727747a52feceb5c5a20b,
         type: 3}
       propertyPath: m_Name
@@ -6950,6 +6930,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675410347}
   m_CullTransparentMesh: 1
+--- !u!114 &702763236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5165285406969017022, guid: 4077fce3ece727747a52feceb5c5a20b,
+    type: 3}
+  m_PrefabInstance: {fileID: 500918364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8934bb25729d024fb2a6cf97a364839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705964222
 GameObject:
   m_ObjectHideFlags: 0
@@ -10889,6 +10881,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1414243055}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1097659874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5165285406969017022, guid: 4077fce3ece727747a52feceb5c5a20b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1414243055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8934bb25729d024fb2a6cf97a364839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1110939701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1229128220885805329, guid: cff9f5d70a9f8334abfb6799dd6b6799,
@@ -11634,6 +11638,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8589707512668207951, guid: 6131333a346bd1f439b578490e4de4e0,
     type: 3}
   m_PrefabInstance: {fileID: 1374156087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1238470775 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3866460386280317789, guid: 4077fce3ece727747a52feceb5c5a20b,
+    type: 3}
+  m_PrefabInstance: {fileID: 500918364}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1246602437
 GameObject:
@@ -12926,6 +12936,11 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2381364890996120513, guid: 4077fce3ece727747a52feceb5c5a20b,
+        type: 3}
+      propertyPath: fireManager
+      value: 
+      objectReference: {fileID: 1097659874}
     - target: {fileID: 3866460386280317779, guid: 4077fce3ece727747a52feceb5c5a20b,
         type: 3}
       propertyPath: m_IsActive
@@ -12936,6 +12951,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.132
       objectReference: {fileID: 0}
+    - target: {fileID: 5165285406969017022, guid: 4077fce3ece727747a52feceb5c5a20b,
+        type: 3}
+      propertyPath: fireEffect
+      value: 
+      objectReference: {fileID: 2056799851}
     - target: {fileID: 6088628776822124584, guid: 4077fce3ece727747a52feceb5c5a20b,
         type: 3}
       propertyPath: m_Name
