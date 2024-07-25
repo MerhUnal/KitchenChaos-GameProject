@@ -32,6 +32,9 @@ public class StoveCounter : BaseCounter, IHasProgress
     private BurningRecipeSO burningRecipeSO;
     private bool isOnFire = false; // Yang?n durumu
 
+    private float fireCooldownTimer = 0f;
+    private const float fireCooldownDuration = 5f; 
+
     private void Start()
     {
         state = State.Idle;
@@ -107,7 +110,12 @@ public class StoveCounter : BaseCounter, IHasProgress
                 break;
         }
 
-        if (state != State.Idle)
+
+        if (!isOnFire && fireCooldownTimer > 0)
+        {
+            fireCooldownTimer -= Time.deltaTime;
+        }
+        if (state != State.Idle && fireCooldownTimer <= 0f)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
             if (chance < 0.01f) // 1% yang?n ba?lama olas?l???
@@ -130,9 +138,10 @@ public class StoveCounter : BaseCounter, IHasProgress
             fireManager.StartRandomFire();
             isOnFire = true;
             BurnMeat(); // Eti yak
+            fireCooldownTimer = fireCooldownDuration;
+           
         }
     }
-
 
     private void BurnMeat()
     {
