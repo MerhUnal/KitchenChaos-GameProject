@@ -7,6 +7,7 @@ public class SelectedCounter : MonoBehaviour
 
     [SerializeField] private BaseCounter baseCounter;
     [SerializeField] private GameObject[] visualGameObjectArray;
+    
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class SelectedCounter : MonoBehaviour
         {
             Hide();
         }
+
+        
 
     }
     private void Show()
