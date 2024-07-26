@@ -27,6 +27,14 @@ public class TrashCounter : BaseCounter, IHasProgress
         {
             if (player.HasKitchenObject())
             {
+                KitchenObject kitchenObject = player.GetKitchenObject();
+                if (kitchenObject.GetKitchenObjectSO().name == "FireExtinguisher")
+                {
+                    
+                    return;
+                }
+
+
                 player.GetKitchenObject().DestroySelf();
                 trashCount++;
                 OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty);

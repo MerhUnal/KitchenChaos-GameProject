@@ -41,6 +41,15 @@ public class Player : MonoBehaviour, IKithchenObjectParent
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
+    public void ExtinguishFire(bool isOpen)
+    {
+        kitchenObject.gameObject.transform.GetChild(1).gameObject.SetActive(isOpen);
+    }
+
+    private void OpenCloseFireExtinguisherSmoke(bool isOpen)
+    {
+        kitchenObject.gameObject.transform.GetChild(1).gameObject.SetActive(isOpen);
+    }
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
@@ -51,7 +60,10 @@ public class Player : MonoBehaviour, IKithchenObjectParent
         {
             selectedCounter.InteractAlternate(this);
         }
-
+        else
+        {
+            OpenCloseFireExtinguisherSmoke(false);
+        }
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)

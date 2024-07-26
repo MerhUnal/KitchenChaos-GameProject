@@ -167,13 +167,14 @@ public class StoveCounter : BaseCounter, IHasProgress
     
     public override void InteractAlternate(Player player)
     {
+       
         if (isOnFire && player.HasFireExtinguisher())
         {
             fireManager.ExtinguishFire();
             isOnFire = false;
-            // Yang?n? söndürme i?lemi burada yap?lacak
+            player.ExtinguishFire(true);
         }
-       
+        
     }
 
     public override void Interact(Player player)
