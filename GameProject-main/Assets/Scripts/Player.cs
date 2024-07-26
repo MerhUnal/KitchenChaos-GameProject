@@ -79,6 +79,17 @@ public class Player : MonoBehaviour, IKithchenObjectParent
         return isWalking;
 
     }
+
+    public bool HasFireExtinguisher()
+    {
+        if (kitchenObject.GetKitchenObjectSO().objectName == "FireExtinguisher")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private void HandleInteractions()
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();

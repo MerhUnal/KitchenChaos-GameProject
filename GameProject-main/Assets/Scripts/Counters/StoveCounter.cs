@@ -167,7 +167,7 @@ public class StoveCounter : BaseCounter, IHasProgress
     
     public override void InteractAlternate(Player player)
     {
-        if (isOnFire)
+        if (isOnFire && player.HasFireExtinguisher())
         {
             fireManager.ExtinguishFire();
             isOnFire = false;
@@ -179,7 +179,7 @@ public class StoveCounter : BaseCounter, IHasProgress
     {
         if (isOnFire)
         {
-            // Yang?n varken etkile?ime izin verme
+            // Yang?n varken etkilesime izin verme
             return;
         }
         if (!HasKitchenObject())

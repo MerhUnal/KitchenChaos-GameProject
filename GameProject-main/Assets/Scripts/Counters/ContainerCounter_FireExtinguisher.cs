@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ContainerCounter_FireExtinguisher : BaseCounter
+
 {
+
     public event EventHandler OnPlayerGrabbedObject;
 
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
@@ -34,9 +36,9 @@ public class ContainerCounter_FireExtinguisher : BaseCounter
             
             player.ClearKitchenObject();
         }
-
-
     }
+
+ 
 
 
 }
