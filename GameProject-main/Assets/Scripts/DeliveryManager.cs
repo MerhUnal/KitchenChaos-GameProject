@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class DeliveryManager : MonoBehaviour
@@ -22,12 +23,19 @@ public class DeliveryManager : MonoBehaviour
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipesMax = 4;
     private int successfulRecipeAmount;
-
+    private int currentLevelIndex;
+    [SerializeField] private List<int> recipeList = new List<int>();
     private void Awake()
     {   
         Instance = this;
 
         waitingRecipeSOList = new List<RecipeSO>();
+    }
+
+    private void Start()
+    {
+        currentLevelIndex=LevelSystem.MainLevelSystem.GetCurrentLevelIndex();
+        recipeList.AddRange(LevelSystem.MainLevelSystem.levelDatas.levelDatas[currentLevelIndex].recipeSOs);
     }
 
     private void Update()
@@ -36,10 +44,10 @@ public class DeliveryManager : MonoBehaviour
         if (spawnRecipeTimer < 0f)
         {
             spawnRecipeTimer = spawnRecipeTimerMax;
-
             if (KitchenGameManager.Instance.IsGamePlaying() && waitingRecipeSOList.Count < waitingRecipesMax)
             {
-                RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)];
+                int rnd = Random.Range(0, recipeList.Count);
+                RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[recipeList[rnd]];
                 Debug.Log(waitingRecipeSO.recipeName);
                 waitingRecipeSOList.Add(waitingRecipeSO);
             }

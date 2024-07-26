@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,15 +16,24 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyGamepadInteractText;
     [SerializeField] private TextMeshProUGUI keyGamepadInteractAlternateText;
     [SerializeField] private TextMeshProUGUI keyGamepadPauseText;
-
-    
+   
     private void Start()
     {
 
         GameInput.Instance.OnBindingRebind += GameInput_OnBindingRebind;
         KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
         UpdateVisual();
-        Show();
+
+        if (LevelSystem.MainLevelSystem.GetCurrentLevelIndex()==0)
+        {
+            Show();
+
+        }
+        else
+        {
+            Hide();
+            KitchenGameManager.Instance.GameInput_OnInteractAction(this, null);
+        }
     }
 
     private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)

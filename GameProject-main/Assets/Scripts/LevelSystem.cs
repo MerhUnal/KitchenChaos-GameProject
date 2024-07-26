@@ -11,6 +11,7 @@ public class LevelSystem : MonoBehaviour
     public LevelDatas levelDatas;
     private string saveFilePath;
 
+
     void Start()
     {
 
@@ -22,7 +23,7 @@ public class LevelSystem : MonoBehaviour
             saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
             levelDatas = new LevelDatas();
 
-            //LoadGame(); // Daha önce kaydedilmi? veriyi yükle
+            LoadGame(); // Daha önce kaydedilmi? veriyi yükle
 
             // E?er veri yoksa veya hatal?ysa yeni seviye verileri olu?tur
             if (levelDatas.levelDatas.Count == 0)
@@ -30,15 +31,16 @@ public class LevelSystem : MonoBehaviour
                 InitializeLevels();
             }
 
-            SaveGame();
+            //SaveGame();
 
             DontDestroyOnLoad(this);
         }
     }
 
+
     private void InitializeLevels()
     {
-        float[] levelTimes = { 20f, 25f, 25f };
+        float[] levelTimes = { 50f, 45f, 40f };
         string[] sceneNames = { "GameScene", "Stage2", "Stage3" }; // Örnek sahne adlar?
         int numberOfLevels = 9; // Örnek olarak 9 seviye
 
@@ -48,7 +50,21 @@ public class LevelSystem : MonoBehaviour
             level.levelIndex = i;
             level.levelTime = levelTimes[i % levelTimes.Length];
             level.sceneName = sceneNames[i / 3]; // Her 3 seviyede bir sahne de?i?ir
-            level.recipeSOs = new List<int>() { 0, 3 };
+            //level.recipeSOs = new List<int>() {0, 3 };
+
+            if (i < 3)
+            {
+                level.recipeSOs = new List<int>() { 0,1,2 }; // ?lk 3 seviye için
+            }
+            else if (i >= 3 && i < 6)
+            {
+                level.recipeSOs = new List<int>() { 0,1,2 }; // Sonraki 3 seviye için
+            }
+            else
+            {
+                level.recipeSOs = new List<int>() { 0,1,2,3 }; // Geri kalan seviyeler için 
+            }
+
             levelDatas.levelDatas.Add(level);
         }
     }
@@ -82,7 +98,6 @@ public class LevelSystem : MonoBehaviour
     public void SetNextLevel()
     {
         levelDatas.currentLevelIndex++;
-        //SaveGame();
     }
 
     public float GetLevelTime(int levelIndex)
@@ -112,6 +127,5 @@ public class LevelData
     public float levelTime;
     public string sceneName;
     public List<int> recipeSOs;
-    //public bool canFireStart;
 }
 

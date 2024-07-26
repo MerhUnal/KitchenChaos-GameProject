@@ -54,7 +54,7 @@ public class KitchenGameManager : MonoBehaviour
         }
     }
 
-    private void GameInput_OnInteractAction(object sender, EventArgs e)
+    public void GameInput_OnInteractAction(object sender, EventArgs e)
     {
         if (state == State.WaitingToStart)
         {
@@ -73,6 +73,7 @@ public class KitchenGameManager : MonoBehaviour
         switch (state)
         {
             case State.WaitingToStart:
+                
                 break;
             case State.CountDownToStart:
                 countdownToStartTimer -= Time.deltaTime;
@@ -87,14 +88,10 @@ public class KitchenGameManager : MonoBehaviour
                 gamePlayingTimer -= Time.deltaTime;
                 OnGamePlayingTimerChanged?.Invoke(this, EventArgs.Empty);
 
-                if (IsFireScene())
-                {
-                   // RandomlyStartFire();
-                }
 
                 if (gamePlayingTimer < 0f)
                 {
-                    if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 1)
+                    if (DeliveryManager.Instance.GetsuccessfulRecipesAmount() >= 4)
                     {
                         state = State.LevelComplete;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
@@ -196,7 +193,7 @@ public class KitchenGameManager : MonoBehaviour
     }
 
 
-    private bool IsFireScene()
+    public bool IsFireScene()
     {
         string sceneName = SceneManager.GetActiveScene().name;
         return sceneName == "Stage2" || sceneName == "Stage3";
