@@ -33,7 +33,7 @@ public class StoveCounter : BaseCounter, IHasProgress
     private bool isOnFire = false; // Yang?n durumu
 
     private float fireCooldownTimer = 0f;
-    private const float fireCooldownDuration = 5f; 
+    private const float fireCooldownDuration = 30f; 
 
     private void Start()
     {
@@ -118,7 +118,7 @@ public class StoveCounter : BaseCounter, IHasProgress
         if (state != State.Idle && fireCooldownTimer <= 0f)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
-            if (chance < 0.01f) // 1% yang?n ba?lama olas?l???
+            if (chance < 0.0001f) // 1% yang?n ba?lama olas?l???
             {
                 if (burningRecipeSO == null)
                 {
