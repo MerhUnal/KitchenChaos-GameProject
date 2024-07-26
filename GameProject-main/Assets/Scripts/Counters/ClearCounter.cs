@@ -16,8 +16,11 @@ public class ClearCounter : BaseCounter
             if (player.HasKitchenObject())
             {
                 //Player is carrying something
-                player.GetKitchenObject().SetKitchenObjectParent(this);
-            } 
+
+                if (!player.HasFireExtinguisher()) {
+                    player.GetKitchenObject().SetKitchenObjectParent(this);
+                } 
+            }
             else
             {
                 //Player not carrying anything
