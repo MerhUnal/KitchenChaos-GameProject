@@ -10,6 +10,7 @@ public static  class Loader
         MainMenuScene,
         GameScene,
         LoadingScene,
+        CreditsScene,
         Stage2,
         Stage3
     }
@@ -23,6 +24,8 @@ public static  class Loader
 
         
     }
+
+    
 
     public static void LoaderCallback()
     {

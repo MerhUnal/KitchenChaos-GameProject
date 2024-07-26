@@ -8,6 +8,8 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button creditsButton;
+
 
     private void Awake()
     {
@@ -20,11 +22,16 @@ public class MainMenuUI : MonoBehaviour
         {
             Application.Quit();
         });
+        creditsButton.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.CreditsScene);
 
-        Time.timeScale = 1f;
+        });
+
+        
+
+            Time.timeScale = 1f;
+
+
     }
-
-   
-
-    
 }
