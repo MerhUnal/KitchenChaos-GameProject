@@ -82,10 +82,15 @@ public class Player : MonoBehaviour, IKithchenObjectParent
 
     public bool HasFireExtinguisher()
     {
-        if (kitchenObject.GetKitchenObjectSO().objectName == "FireExtinguisher")
+
+        if (HasKitchenObject())
         {
-            return true;
+            if (kitchenObject.GetKitchenObjectSO().objectName == "FireExtinguisher")
+            {
+                return true;
+            }
         }
+        
 
         return false;
     }

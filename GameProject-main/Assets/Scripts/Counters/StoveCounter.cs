@@ -173,6 +173,7 @@ public class StoveCounter : BaseCounter, IHasProgress
             isOnFire = false;
             // Yang?n? söndürme i?lemi burada yap?lacak
         }
+       
     }
 
     public override void Interact(Player player)
