@@ -23,7 +23,7 @@ public class LevelSystem : MonoBehaviour
             saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
             levelDatas = new LevelDatas();
 
-            LoadGame(); // Daha önce kaydedilmi? veriyi yükle
+             // Daha önce kaydedilmi? veriyi yükle
 
             // E?er veri yoksa veya hatal?ysa yeni seviye verileri olu?tur
             if (levelDatas.levelDatas.Count == 0)
@@ -31,8 +31,8 @@ public class LevelSystem : MonoBehaviour
                 InitializeLevels();
             }
 
-            //SaveGame();
-
+            SaveGame();
+            LoadGame();
             DontDestroyOnLoad(this);
         }
     }
