@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelCompleteUI : MonoBehaviour
@@ -13,9 +14,7 @@ public class LevelCompleteUI : MonoBehaviour
 
     private void Awake()
     {
-        restartButton.onClick.AddListener(() => {
-            Loader.Load(Loader.Scene.GameScene);
-        });
+        restartButton.onClick.AddListener(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
         });

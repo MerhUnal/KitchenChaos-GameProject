@@ -23,7 +23,8 @@ public class Player : MonoBehaviour, IKithchenObjectParent
      [SerializeField] private LayerMask countersLayerMask;
      [SerializeField] private Transform kitchenObjectHoldPoint;
 
-
+    public Collider enteredCollider;
+    public bool isTeleported = false;
     private bool isWalking;
     private Vector3 lastIneractDir;
     private BaseCounter selectedCounter;
@@ -235,5 +236,11 @@ public class Player : MonoBehaviour, IKithchenObjectParent
     public bool HasKitchenObject()
     {
         return kitchenObject != null;
+    }
+
+    internal void CheckTeleport(Collider collider)
+    {
+        if(collider!=enteredCollider)
+            isTeleported = false;
     }
 }

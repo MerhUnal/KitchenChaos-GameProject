@@ -851,7 +851,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b69380b2879d65b4eb11ff27f00c31dd, type: 2}
   burningRecipeSOArray:
   - {fileID: 11400000, guid: 08d0289ecc8400f4d924601046b6f141, type: 2}
-  fireEffect: {fileID: 0}
+  fireManager: {fileID: 5165285406969017022}
 --- !u!114 &5165285406969017022
 MonoBehaviour:
   m_ObjectHideFlags: 0

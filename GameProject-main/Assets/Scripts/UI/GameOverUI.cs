@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour
@@ -12,10 +13,10 @@ public class GameOverUI : MonoBehaviour
 
     private void Awake()
     {
-
-        restartButton.onClick.AddListener(() => {
-            Loader.Load(Loader.Scene.GameScene);
-        });
+       //restartButton.onClick.RemoveAllListeners();
+       /* restartButton.onClick.AddListener(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+        print(SceneManager.GetActiveScene().name);
+  */
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
         });
@@ -23,9 +24,12 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
+
         KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnstateChanged;
 
         Hide();
+
+       
     }
 
     private void KitchenGameManager_OnstateChanged(object sender, System.EventArgs e)

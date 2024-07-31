@@ -11,6 +11,17 @@ public class LevelSystem : MonoBehaviour
     public LevelDatas levelDatas;
     private string saveFilePath;
 
+    private void Awake()
+    {
+        /*
+        if (MainLevelSystem == null)
+        {
+            MainLevelSystem = this;
+            DontDestroyOnLoad(this);
+        }
+        */
+            
+    }
 
     void Start()
     {
@@ -18,6 +29,7 @@ public class LevelSystem : MonoBehaviour
         if (MainLevelSystem == null)
         {
             MainLevelSystem = this;
+            DontDestroyOnLoad(this);
 
             Debug.Log("Level system  start");
             saveFilePath = Application.persistentDataPath + "/PlayerLevels.json";
@@ -30,17 +42,19 @@ public class LevelSystem : MonoBehaviour
             {
                 InitializeLevels();
             }
-
             SaveGame();
             LoadGame();
-            DontDestroyOnLoad(this);
+
         }
+
+      
+
     }
 
 
     private void InitializeLevels()
     {
-        float[] levelTimes = { 50f, 45f, 40f };
+        float[] levelTimes = { 60f, 55f, 50f };
         string[] sceneNames = { "GameScene", "Stage2", "Stage3" }; // Örnek sahne adlar?
         int numberOfLevels = 9; // Örnek olarak 9 seviye
 
